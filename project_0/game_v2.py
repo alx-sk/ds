@@ -2,6 +2,8 @@
 import numpy as np
 import math
 
+from game_core_v3 import game_core_v3
+
 
 def random_predict(number: int = 1) -> int:
     """Просто угадываем на random, никак не используя информацию о больше или меньше.
