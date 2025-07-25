@@ -1,13 +1,11 @@
 
 import numpy as np
+import math
 
 
-
-
-
-
-def random_predict(number:int=1) -> int:
-    """Рандомно угадываем число
+def random_predict(number: int = 1) -> int:
+    """Просто угадываем на random, никак не используя информацию о больше или меньше.
+       Функция принимает загаданное число и возвращает число попыток
 
     Args:
         number (int, optional): Загаданное число. Defaults to 1.
@@ -15,24 +13,78 @@ def random_predict(number:int=1) -> int:
     Returns:
         int: Число попыток
     """
-
     count = 0
 
     while True:
         count += 1
-        predict_number = np.random.randint(1, 101) # предполагаемое число
+        predict_number = np.random.randint(1, 101)  # предполагаемое число
         if number == predict_number:
-            break # выход из цикла, если угадали
-    return(count)
+            break  # выход из цикла если угадали
+
+    return count
 
 
+def game_core_v2(number: int = 1) -> int:
+    """Сначала устанавливаем любое random число, а потом уменьшаем
+    или увеличиваем его в зависимости от того, больше оно или меньше нужного.
+       Функция принимает загаданное число и возвращает число попыток
+
+    Args:
+        number (int, optional): Загаданное число. Defaults to 1.
+
+    Returns:
+        int: Число попыток
+    """
+    count = 0
+    predict = np.random.randint(1, 101)
+
+    while number != predict:
+        count += 1
+        if number > predict:
+            predict += 1
+        elif number < predict:
+            predict -= 1
+
+    return count
+
+
+def game_core_v3(number: int = 1) -> int:
+    """Угадываем число за счет постепенного уменьшения (деления на 2) размераз области в котором оно может содержаться
+    Args:
+        number (int, optional): Загаданное число. Defaults to 1.
+
+    Returns:
+        int: Число попыток
+    """
+    # Ваш код начинается здесь
+    import math
+    count = 0
+    max_value = 100
+    current_value = max_value // 2
+    range = current_value
+
+    
+    while True:
+        count += 1
+        if number == current_value:
+            break
+        elif number > current_value:
+            # если загаднное значение больше текущего, тогда увеличивание текущее значение на половину прошлого диапазона
+            range = math.ceil(range/2)
+            current_value = current_value + range
+
+        else:
+            # если загаднное значение меньше текущего, тогда уменьшаем текущее значение на половину прошлого диапазона
+            range = math.ceil(range/2)
+            current_value = current_value - range
+    # Ваш код заканчивается здесь
+
+    return count
 
 def score_game(random_predict) -> int:
     """За какое количество попыток в среднем из 1000 подходов угадывает наш алгоритм
-
     Args:
         random_predict ([type]): функция угадывания
-
     Returns:
         int: среднее количество попыток
     """
@@ -52,5 +104,6 @@ def score_game(random_predict) -> int:
 # RUN
 
 if __name__ == '__main__':
-    print(f'Количество попыток: {random_predict()}')
+    #print(f'Количество попыток: {random_predict()}')
+    print(score_game(random_predict))
 
