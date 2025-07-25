@@ -63,7 +63,6 @@ def game_core_v3(number: int = 1) -> int:
     current_value = max_value // 2
     range = current_value
 
-    
     while True:
         count += 1
         if number == current_value:
@@ -72,7 +71,6 @@ def game_core_v3(number: int = 1) -> int:
             # если загаднное значение больше текущего, тогда увеличивание текущее значение на половину прошлого диапазона
             range = math.ceil(range/2)
             current_value = current_value + range
-
         else:
             # если загаднное значение меньше текущего, тогда уменьшаем текущее значение на половину прошлого диапазона
             range = math.ceil(range/2)
@@ -104,6 +102,5 @@ def score_game(random_predict) -> int:
 # RUN
 
 if __name__ == '__main__':
-    #print(f'Количество попыток: {random_predict()}')
-    print(score_game(random_predict))
+   score_game(game_core_v3)
 
